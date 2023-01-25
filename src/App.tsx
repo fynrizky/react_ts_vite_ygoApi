@@ -48,7 +48,15 @@ const App: React.FC = () => {
     <div>
       {error && <p>Error: {error}</p>}
       {loading && (
-        <div style={{position:"absolute", right: "40%", top: "20%"}}>
+        <div style={{position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#ffffff"}}>
          <img src="https://thumbs.gfycat.com/PerfectDeadlyLadybug-max-1mb.gif" alt="ygogif" />
           <h5>Loading...</h5>
         </div>)}
