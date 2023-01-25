@@ -30,7 +30,8 @@ const App: React.FC = () => {
         // console.log(result.data.data)
         setCards(result.data.data);
       } catch (error) {
-        setError(error.message);
+        const message = error instanceof Error ? error.message : "Unknown error.";
+        setError(message);
       } finally {
           setTimeout(()=>{
             setLoading(false);
@@ -61,7 +62,7 @@ const App: React.FC = () => {
               initial={{opacity:0, y: 50}}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 1 }}>
+              transition={{ duration: 0.7 }}>
 
               <h1>{card.name}</h1>
               <h3>Type: {card.type}</h3>
