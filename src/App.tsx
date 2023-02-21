@@ -18,6 +18,7 @@ interface CardImage {
 const App: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [imgWait, setImageWait] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -40,11 +41,13 @@ const App: React.FC = () => {
           setTimeout(()=>{
             setLoading(false);
           },1000);
+
       }
       
     };
     fetchData();
   }, []);
+
 
   //onchange
   // const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +66,7 @@ const App: React.FC = () => {
     const searchTermInput = document.getElementById('searchTerm') as HTMLInputElement;
     const searchTerm = searchTermInput.value;
     setSearchTerm(searchTerm);
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
 
 
@@ -124,7 +127,6 @@ const getPageNumbers = () => {
   return pageNumbers;
 };
 
- 
 
   return (
     <div>
@@ -192,9 +194,31 @@ const getPageNumbers = () => {
 
               <h1 className='font-bold'>{card.name}</h1>
               <h3>Type: {card.type}</h3>
-              {card.card_images.length > 0 && (
-                <img src={card.card_images[0].image_url} alt="" />
+              
+              {/* imgwait/spinner */}
+               {card.card_images.length > 0 && (
+              <div style={{ position: 'relative', minHeight: '200px' }}>
+                {imgWait && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                  }}>
+                    <p className="text-center">Wait...</p>
+                  </div>
                 )}
+                <img
+                  src={card.card_images[0].image_url}
+                  alt=""
+                  onLoad={() => setImageWait(false)}
+                  onError={() => setImageWait(false)}
+                  style={{ display: imgWait ? 'none' : 'block' }}
+                />
+              </div>
+            )}
+              
+                
               <div className='font-bold'>Description:</div> 
               <p>{card.desc}</p>
             </motion.div>
