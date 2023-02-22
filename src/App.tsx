@@ -78,7 +78,8 @@ const App: React.FC = () => {
 
 
   const filteredData = cards.filter((item) => {
-    return item.name.toLowerCase().includes(searchTerm.toLocaleLowerCase());
+    return item.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+           item.desc.toLowerCase().includes(searchTerm.toLocaleLowerCase());
   })
 
 
