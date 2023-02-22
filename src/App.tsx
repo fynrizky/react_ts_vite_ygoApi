@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
+import PageChild from './components/PageChild';
+import SearchingChild from './components/SearchingChild';
 
 interface Card {
   id: number;
@@ -63,9 +65,14 @@ const App: React.FC = () => {
     // setSearchTerm(formData.get('searchTerm') as string);
     
     // input id
-    const searchTermInput = document.getElementById('searchTerm') as HTMLInputElement;
-    const searchTerm = searchTermInput.value;
-    setSearchTerm(searchTerm);
+
+    // cara 1
+    // const searchTermInput = document.getElementById('searchTerm') as HTMLInputElement;
+    // const searchTerm = searchTermInput.value;
+    // setSearchTerm(searchTerm);
+    
+    // cara2
+    setSearchTerm(event.currentTarget.searchTerm.value);
     setCurrentPage(1);
   };
 
@@ -100,42 +107,17 @@ const handleNextClick = () => {
   }
 };
 
-const getPageNumbers = () => {
-  const maxPageNumbers = 3;
-  const pageNumbers: number[] = [];
-  let startPage = 1;
-  let endPage = totalPages;
 
-  if (totalPages > maxPageNumbers) {
-    const middlePage = Math.ceil(maxPageNumbers / 2);
-    if (currentPage > middlePage) {
-      startPage = currentPage - (middlePage - 1);
-      endPage = currentPage + (maxPageNumbers - middlePage);
-      if (endPage > totalPages) {
-        endPage = totalPages;
-        startPage = totalPages - maxPageNumbers + 1;
-      }
-    } else {
-      endPage = maxPageNumbers;
-    }
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-  }
-
-  return pageNumbers;
-};
 
 
   return (
     <div>
       {error && <p>Error: {error}</p>}
       {/* <input type="text" name="searchTerm" placeholder="Search..." onChange={handleSearch} /> */}
-      <form onSubmit={handleSearch} className="flex my-4 w-full">
-        <input type="text" id="searchTerm" className='border border-grey-300 rounded bg-gray-900 text-slate-300 py-2 px-2 mr-2 flex-grow'  placeholder="Search..." />
-        <button type="submit" className='bg-gray-500 hover:bg-gray-600 text-slate-300 font-bold py-2 px-4 rounded'>Search</button>
-      </form>
+      <SearchingChild 
+        onHandleSearch={(event)=>handleSearch(event)}
+        setCurrentPage={setCurrentPage}
+      />
       {loading && (
         <div className='fixed top-0 right-0 bottom-0 left-0 text-slate-300 flex items-center justify-center bg-gray-900'>
          <img src="https://thumbs.gfycat.com/PerfectDeadlyLadybug-max-1mb.gif" alt="ygogif" />
@@ -155,19 +137,13 @@ const getPageNumbers = () => {
                 >
                   Prev
                 </button>
-                {getPageNumbers().map(pageNumber => (
-                  <button
-                    key={pageNumber}
-                    className={`mx-2 py-2 px-4 rounded ${
-                      currentPage === pageNumber
-                        ? "bg-gray-700 text-slate-300"
-                        : "bg-gray-500 hover:bg-gray-600 text-slate-300"
-                    }`}
-                    onClick={() => handleClick(pageNumber)}
-                  >
-                    {pageNumber}
-                  </button>
-                ))}
+
+                <PageChild 
+                  cPage={currentPage} 
+                  totalPages={totalPages} 
+                  onHandleClick={(pageNumber)=>handleClick(pageNumber)} 
+                />
+                
                 <button
                   className="mx-2 py-2 px-4 rounded bg-gray-500 hover:bg-gray-600 text-slate-300"
                   onClick={handleNextClick}
