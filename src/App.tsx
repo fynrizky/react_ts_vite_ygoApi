@@ -133,7 +133,7 @@ const getPageNumbers = () => {
       {error && <p>Error: {error}</p>}
       {/* <input type="text" name="searchTerm" placeholder="Search..." onChange={handleSearch} /> */}
       <form onSubmit={handleSearch} className="flex my-4 w-full">
-        <input type="text" className='border border-grey-300 rounded bg-gray-900 text-slate-300 py-2 px-2 mr-2 flex-grow' id="searchTerm" placeholder="Search..." />
+        <input type="text" id="searchTerm" className='border border-grey-300 rounded bg-gray-900 text-slate-300 py-2 px-2 mr-2 flex-grow'  placeholder="Search..." />
         <button type="submit" className='bg-gray-500 hover:bg-gray-600 text-slate-300 font-bold py-2 px-4 rounded'>Search</button>
       </form>
       {loading && (
