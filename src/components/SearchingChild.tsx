@@ -7,7 +7,7 @@ const SearchingChild: React.FC<Props> = (props : Props) => {
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         props.onHandleSearch(event);
-        props.setCurrentPage(1)
+        props.setCurrentPage(1);
     }
   return (
     <>
