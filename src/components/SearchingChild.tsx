@@ -3,7 +3,7 @@ type Props = {
     onHandleSearch : (event: React.FormEvent<HTMLFormElement>) => void
     setCurrentPage : React.Dispatch<React.SetStateAction<number>>
 }
-const SearchingChild: React.FC<Props> = (props) => {
+const SearchingChild: React.FC<Props> = (props : Props) => {
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         props.onHandleSearch(event);

@@ -6,7 +6,7 @@ type Props = {
     totalPages: number;
 }
 
-const PageChild: React.FC<Props> = (props) => {
+const PageChild: React.FC<Props> = (props : Props) => {
 
     const handleCLick = (pageNumber: number) =>{
         props.onHandleClick(pageNumber)
